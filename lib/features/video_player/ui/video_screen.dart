@@ -1,100 +1,56 @@
+
+import 'package:better_player_plus/better_player_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hls_video_player/flutter_hls_video_player/controller/flutter_hls_video_controls.dart';
-import 'package:flutter_hls_video_player/flutter_hls_video_player/controller/flutter_hls_video_player_controller.dart';
-import 'package:flutter_hls_video_player/flutter_hls_video_player/controller/flutter_hls_video_player_state.dart';
-import 'package:flutter_hls_video_player/flutter_hls_video_player/view/flutter_hls_video_player.dart';
 import 'package:flutter_rearch/flutter_rearch.dart';
+import 'package:rearch/rearch.dart';
 import 'package:rearch_demo/features/video_player/data/video_repository.dart';
 
-class HomeView extends RearchConsumer {
-  const HomeView({super.key});
+class VideoStreamPage extends RearchConsumer {
+  const VideoStreamPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetHandle use) {
-    final playlist = use(videoPlaylistCapsule);
-    final (activeIndex, setActiveIndex) = use(activeVideoIndexCapsule);
-    final controller = use(hlsControllerCapsule);
+    final playerAsync = use(betterPlayerStateCapsule);
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: SafeArea(
-        child: StreamBuilder<FlutterHLSVideoPlayerState>(
-          stream: controller.stateStream,
-          builder: (context, snapshot) {
-            final isFullScreen = snapshot.data?.fullScreen ?? false;
-
-            return Stack(
-              children: [
-                if (!isFullScreen)
-                  Column(
-                    children: [
-                      AspectRatio(
-                        aspectRatio: 16 / 9,
-                        child: Container(color: Colors.black),
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: playlist.length,
-                          itemBuilder: (context, index) => ListTile(
-                            onTap: () => setActiveIndex(index),
-                            title: Text(
-                              playlist[index],
-                              style: TextStyle(
-                                color: activeIndex == index 
-                                    ? Theme.of(context).primaryColor 
-                                    : Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                
-                // The actual Player Widget
-                FlutterHLSVideoPlayer(
-                  controller: controller,
-                  controls: FlutterHLSVideoPlayerControls(
-                    hideBackArrowWidget: true,
-                    onTapSetting: () => _showQualityMenu(context, controller),
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
+      appBar: AppBar(
+        title: const Text('BetterPlayer HLS'),
+        backgroundColor: Colors.transparent,
       ),
-    );
-  }
+      body: Center(
+        child: switch (playerAsync) {
+          // Success: Display the player
+          AsyncData(data: final controller) => AspectRatio(
+              aspectRatio: 16 / 9,
+              child: BetterPlayer(controller: controller),
+            ),
+          
+          // Loading: Prevents ANR while the M3U8 manifest is being parsed
+          AsyncLoading() => const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(color: Colors.blue),
+                SizedBox(height: 16),
+                Text('Buffering Stream...', style: TextStyle(color: Colors.white)),
+              ],
+            ),
 
-  void _showQualityMenu(BuildContext context, FlutterHLSVideoPlayerController controller) {
-    final overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
-    final videoState = controller.initialState; // Or get from the Stream snapshot
-
-    showMenu(
-      context: context,
-      position: RelativeRect.fromLTRB(overlay.size.width - 50, 100, 10, 0),
-      items: [
-        PopupMenuItem(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: (videoState.availableQualities ?? []).asMap().entries.map((entry) {
-              int index = entry.key;
-              var quality = entry.value;
-              String height = quality['height'].toString();
-              
-              return ListTile(
-                selected: videoState.currentQuality == index,
-                title: Text(height == "Auto" ? height : "${height}P"),
-                onTap: () {
-                  controller.changeQuality(index == 0 ? -1 : index);
-                  Navigator.pop(context);
-                },
-              );
-            }).toList(),
-          ),
-        ),
-      ],
+          // Error: Handles network or decoder failures
+          AsyncError(error: final err) => Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Text(
+                'Player Error: $err',
+                style: const TextStyle(color: Colors.red),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          // TODO: Handle this case.
+          Object() => throw UnimplementedError(),
+          // TODO: Handle this case.
+          null => throw UnimplementedError(),
+        },
+      ),
     );
   }
 }

@@ -20,7 +20,7 @@ class MainHomeScreen extends RearchConsumer {
         children: const [
           PostScreen(),    // Page 1: JSONPlaceholder API
           ProductListScreen(), // Page 2: DummyJSON API 
-          HomeView()
+          VideoStreamPage()
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

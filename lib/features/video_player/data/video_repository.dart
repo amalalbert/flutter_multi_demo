@@ -1,48 +1,63 @@
-import 'package:flutter_hls_video_player/flutter_hls_video_player/controller/flutter_hls_video_player_controller.dart';
+import 'package:better_player_plus/better_player_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:rearch/rearch.dart';
 
-// 1. The Playlist Data
-List<String> videoPlaylistCapsule(CapsuleHandle use) => [
-  "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
-  "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8",
-  "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.mp4/.m3u8",
-  "https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8",
-  "https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8",
-  "http://d3rlna7iyyu8wu.cloudfront.net/skip_armstrong/skip_armstrong_stereo_subs.m3u8",
-];
+// Capsule to manage the BetterPlayerController
+AsyncValue<BetterPlayerController> betterPlayerStateCapsule(CapsuleHandle use) {
+  // Use a trigger if you want to allow external refreshes
+  final (index, _) = use.state(0); 
+  final playlist = [
+    "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.mp4/.m3u8",
+    "https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8",
+  ];
 
-// 2. Active Video Index State
-(int, void Function(int)) activeVideoIndexCapsule(CapsuleHandle use) {
-  return use.state(0); // Default to the first video
-}
+  final initFuture = use.memo(() async {
+    // 1. Define Configuration
+    final controller = BetterPlayerController(
+      const BetterPlayerConfiguration(
+        autoPlay: true,
+        looping: false,
+        aspectRatio: 16 / 9,
+        subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(
+          fontSize: 20,
+          fontColor: Colors.white,
+        ),
+        controlsConfiguration: BetterPlayerControlsConfiguration(
+          enablePlayPause: true,
+          enableMute: true,
+          enableFullscreen: true,
+          enableSubtitles: true,
+        ),
+      ),
+    );
 
-// 3. The Controller Capsule (Handles the actual Player logic)
-FlutterHLSVideoPlayerController hlsControllerCapsule(CapsuleHandle use) {
-  final playlist = use(videoPlaylistCapsule);
-  final (index, _) = use(activeVideoIndexCapsule);
+    // 2. Define Data Source
+    final dataSource = BetterPlayerDataSource(
+      BetterPlayerDataSourceType.network,
+      playlist[index],
+      headers: {"Custom-Header": "value"},
+      useAsmsTracks: true,
+      cacheConfiguration: const BetterPlayerCacheConfiguration(
+        maxCacheSize: 100 * 1024 * 1024,
+      ),
+      notificationConfiguration: const BetterPlayerNotificationConfiguration(
+        showNotification: true,
+        title: "Tears of Steel",
+      ),
+    );
 
-  // Memoize the controller so it persists
-  var controller = use.memo(() => FlutterHLSVideoPlayerController());
+    // 3. Setup and wait
+    await controller.setupDataSource(dataSource);
+    return controller;
+  }, [index]); // Re-initialize if the index changes
 
-  // side effect to load video whenever the index changes
-  // Separate Effect for Disposal:
-  // This runs ONLY when the app/feature is destroyed.
+  // Automatic Disposal
   use.effect(() {
-    return () => controller.dispose();
-  }, [controller]); // Only disposes when the controller object itself changes
+    return () async {
+      final controller = await initFuture;
+      controller.dispose();
+    };
+  }, [initFuture]);
 
-  // 3. Separate Effect for Loading:
-  // This runs whenever the index changes.
-  use.effect(() {
-    // Check if the controller is already closed to avoid the StateError
-    // Note: If the package doesn't expose an 'isClosed' property,
-    // ReArch's use.effect handles the sync nature naturally.
-
-    controller.loadHlsVideo(playlist[index]);
-    controller.play();
-
-    return null; // No disposal here! We don't want to close it between videos.
-  }, [index]);
-
-  return controller;
+  return use.future(initFuture);
 }
