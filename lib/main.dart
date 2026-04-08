@@ -1,11 +1,13 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_rearch/flutter_rearch.dart';
+import 'package:media_kit/media_kit.dart';
 import 'package:rearch_demo/features/posts/ui/post_screen.dart';
 import 'package:rearch_demo/shared/utils.dart';
 import 'package:rearch_demo/ui/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MediaKit.ensureInitialized();
   AppLogger.init();
   runApp(RearchBootstrapper(child: const MyApp()));
 }
