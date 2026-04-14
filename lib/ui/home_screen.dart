@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rearch/flutter_rearch.dart';
 import 'package:rearch_demo/features/posts/ui/post_screen.dart';
 import 'package:rearch_demo/features/products/ui/product_list_screen.dart';
+import 'package:rearch_demo/features/video_player/ui/bitmovin_player.dart';
 import 'package:rearch_demo/features/video_player/ui/media_kit_player.dart';
 import 'package:rearch_demo/features/video_player/ui/video_screen.dart';
 import 'package:rearch_demo/features/video_player/ui/webview_ui.dart';
@@ -22,9 +23,10 @@ class MainHomeScreen extends RearchConsumer {
         children: const [
           PostScreen(), // Page 1: JSONPlaceholder API
           ProductListScreen(), // Page 2: DummyJSON API
-          // VideoStreamPage(),
+          VideoStreamPage(),
           // StreamingWebViewPage(),
-          MediaKitPlayer(),
+          // MediaKitPlayer(),
+          // BasicPlayback()
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -42,8 +44,9 @@ class MainHomeScreen extends RearchConsumer {
             label: 'Products',
           ),
           // BottomNavigationBarItem(icon: Icon(Icons.play_circle), label: 'Live'),
-          // BottomNavigationBarItem(icon: Icon(Icons.live_tv), label: 'WebLive'),
-          BottomNavigationBarItem(icon: Icon(Icons.video_library), label: 'MediaKit'),
+          BottomNavigationBarItem(icon: Icon(Icons.live_tv), label: 'WebLive'),
+          // BottomNavigationBarItem(icon: Icon(Icons.video_library), label: 'MediaKit'),
+          // BottomNavigationBarItem(icon: Icon(Icons.ondemand_video), label: 'Bitmovin'),
         ],
       ),
     );

@@ -13,7 +13,25 @@ pluginManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url = uri("https://artifacts.bitmovin.com/artifactory/public-releases")
+        }
         gradlePluginPortal()
+    }
+    
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS) // Ensure this is set
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url = uri("https://storage.googleapis.com/download.flutter.io")
+        }
+        maven {
+            url = uri("https://artifacts.bitmovin.com/artifactory/public-releases")
+        }
     }
 }
 

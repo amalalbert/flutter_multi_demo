@@ -4,8 +4,8 @@ import 'package:rearch/rearch.dart';
 
 // 1. The Data Source Capsule
 List<String> videoPlaylistCapsule(CapsuleHandle use) => [
-  "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
-  "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8",
+  "https://vz-f731815e-1e5.b-cdn.net/bcdn_token=DpaeF-5lxRWreuMsIPviWEmV-V8URKC2m4R7wSDraQw&expires=1776229632&token_path=%2F0ab39215-2445-4175-a074-9c3f8275478f%2F/0ab39215-2445-4175-a074-9c3f8275478f/playlist.m3u8"
+      "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8",
   "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.mp4/.m3u8",
   "https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8",
   "https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8",
@@ -59,6 +59,7 @@ AsyncValue<BetterPlayerController> betterPlayerStateCapsule(CapsuleHandle use) {
           liveTextColor: Colors.red,
         ),
         autoPlay: true,
+
         aspectRatio: 16 / 9,
         fit: BoxFit.contain,
       ),
@@ -67,6 +68,14 @@ AsyncValue<BetterPlayerController> betterPlayerStateCapsule(CapsuleHandle use) {
     final dataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
       playlist[index],
+      headers: {
+        "origin": "https://videojs.github.io",
+        "referer": "https://videojs.github.io/",
+        "user-agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.0.0",
+        "accept": "*/*",
+        "accept-language": "en-US,en;q=0.9",
+      },
       useAsmsTracks: true,
     );
 
