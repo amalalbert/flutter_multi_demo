@@ -8,11 +8,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Column(
+        width: double.infinity,
+        height: double.infinity,
+        color: Colors.black,
+        child: SingleChildScrollView(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
               HeroBanner(),
@@ -20,8 +20,7 @@ class HomePage extends StatelessWidget {
               AutoBannerSlider(),
             ],
           ),
-        ],
-      ),
-    );
+        ),
+      );
   }
 }
