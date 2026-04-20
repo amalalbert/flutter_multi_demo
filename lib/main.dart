@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_rearch/flutter_rearch.dart';
 import 'package:rearch_demo/features/posts/ui/post_screen.dart';
 import 'package:rearch_demo/shared/utils.dart';
