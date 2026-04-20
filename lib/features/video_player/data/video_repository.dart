@@ -4,8 +4,8 @@ import 'package:rearch/rearch.dart';
 
 // 1. The Data Source Capsule
 List<String> videoPlaylistCapsule(CapsuleHandle use) => [
-  "https://vz-f731815e-1e5.b-cdn.net/bcdn_token=DpaeF-5lxRWreuMsIPviWEmV-V8URKC2m4R7wSDraQw&expires=1776229632&token_path=%2F0ab39215-2445-4175-a074-9c3f8275478f%2F/0ab39215-2445-4175-a074-9c3f8275478f/playlist.m3u8"
-      "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8",
+  "https://vz-43aeb6f3-603.b-cdn.net/bcdn_token=HS256-Xn47fmK1VXjORZ1XkS4rsBB9Wc5nGci7vVVpA-Zqo-E&token_path=%2F59b08679-7878-4987-a1f3-e8c465520f9b%2F&expires=1776488776/59b08679-7878-4987-a1f3-e8c465520f9b/playlist.m3u8",
+  "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8",
   "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.mp4/.m3u8",
   "https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8",
   "https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8",
@@ -77,6 +77,7 @@ AsyncValue<BetterPlayerController> betterPlayerStateCapsule(CapsuleHandle use) {
         "accept-language": "en-US,en;q=0.9",
       },
       useAsmsTracks: true,
+      videoFormat: BetterPlayerVideoFormat.hls
     );
 
     await controller.setupDataSource(dataSource);
