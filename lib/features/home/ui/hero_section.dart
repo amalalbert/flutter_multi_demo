@@ -18,9 +18,7 @@ class HeroBanner extends StatelessWidget {
           ),
 
           /// Dark overlay
-          Container(
-            color: Colors.black.withOpacity(0.6),
-          ),
+          Container(color: Colors.black.withValues(alpha: 0.6)),
 
           /// Content
           Padding(
@@ -84,10 +82,19 @@ class HeroBanner extends StatelessWidget {
                   ),
                   child: const Text(
                     '新規会員申込み',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                
+                 const SizedBox(height: 24),
+                 
+                const Text(
+                  '※無料・有料版からお選びください',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 13,
+                    height: 1.5,
                   ),
                 ),
               ],
