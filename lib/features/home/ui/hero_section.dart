@@ -1,107 +1,140 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rearch/flutter_rearch.dart';
+import 'package:rearch_demo/logic/hero_capsules.dart';
 
-class HeroBanner extends StatelessWidget {
+class HeroBanner extends RearchConsumer {
   const HeroBanner({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 350,
-      width: double.infinity,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          /// Background image
-          Image.asset(
-            'assets/images/hero_bg.jpg', // your background collage
-            fit: BoxFit.cover,
-          ),
+  Widget build(BuildContext context, WidgetHandle use) {
+    final heroContent = use(heroBannerContentCapsule);
+    final isMobile = MediaQuery.of(context).size.width < 600;
+    final isTablet = MediaQuery.of(context).size.width < 1024;
 
-          /// Dark overlay
-          Container(color: Colors.black.withValues(alpha: 0.6)),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Responsive sizing
+        final height = isMobile ? 320.0 : isTablet ? 380.0 : 420.0;
+        final smallTextSize = isMobile ? 11.0 : isTablet ? 12.0 : 14.0;
+        final mainTitleSize = isMobile ? 22.0 : isTablet ? 26.0 : 32.0;
+        final subtitleSize = isMobile ? 11.0 : isTablet ? 12.0 : 14.0;
+        final buttonTextSize = isMobile ? 12.0 : 14.0;
+        final disclaimerSize = isMobile ? 11.0 : 13.0;
+        final horizontalPadding = isMobile ? 16.0 : isTablet ? 24.0 : 40.0;
+        final topGap = isMobile ? 12.0 : 16.0;
+        final titleGap = isMobile ? 12.0 : 16.0;
+        final subtitleGap = isMobile ? 12.0 : 16.0;
+        final ctaGap = isMobile ? 16.0 : 24.0;
+        final disclaimerGap = isMobile ? 12.0 : 16.0;
+        final buttonPaddingH = isMobile ? 28.0 : 40.0;
+        final buttonPaddingV = isMobile ? 10.0 : 14.0;
 
-          /// Content
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                /// Top small text
-                const Text(
-                  'Business Media of Funai Soken',
-                  style: TextStyle(
-                    color: Colors.cyanAccent,
-                    fontSize: 14,
-                    letterSpacing: 1,
-                  ),
-                ),
+        return SizedBox(
+          height: height,
+          width: double.infinity,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              /// Background image
+              Image.asset(
+                heroContent.backgroundImage,
+                fit: BoxFit.cover,
+              ),
 
-                const SizedBox(height: 16),
+              /// Dark overlay
+              Container(
+                color: Colors.black.withValues(
+                    alpha: heroContent.overlayOpacity),
+              ),
 
-                /// Main title
-                const Text(
-                  '船井総研の\n経営メディア',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    height: 1.3,
-                  ),
-                ),
-
-                const SizedBox(height: 16),
-
-                /// Subtitle
-                const Text(
-                  '経営者の「決断」を支える、確かな拠り所がここにある。\nあなたの次の一手を確信に変える、船井総研の実践知。',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 13,
-                    height: 1.5,
-                  ),
-                ),
-
-                const SizedBox(height: 24),
-
-                /// CTA Button
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF00CFC8),
-                    foregroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 40,
-                      vertical: 14,
+              /// Content
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    /// Top small text
+                    Text(
+                      heroContent.smallText,
+                      style: TextStyle(
+                        color: heroContent.accentColor,
+                        fontSize: smallTextSize,
+                        letterSpacing: 0.8,
+                      ),
                     ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+
+                    SizedBox(height: topGap),
+
+                    /// Main title
+                    Text(
+                      heroContent.mainTitle,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: mainTitleSize,
+                        fontWeight: FontWeight.bold,
+                        height: 1.3,
+                      ),
                     ),
-                    elevation: 0,
-                  ),
-                  child: const Text(
-                    '新規会員申込み',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
+
+                    SizedBox(height: titleGap),
+
+                    /// Subtitle
+                    Text(
+                      heroContent.subtitle,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: subtitleSize,
+                        height: 1.5,
+                      ),
+                    ),
+
+                    SizedBox(height: ctaGap),
+
+                    /// CTA Button
+                    ElevatedButton(
+                      onPressed: heroContent.onButtonPressed ?? () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: heroContent.accentColor,
+                        foregroundColor: Colors.black,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: buttonPaddingH,
+                          vertical: buttonPaddingV,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: Text(
+                        heroContent.buttonText,
+                        style: TextStyle(
+                          fontSize: buttonTextSize,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: disclaimerGap),
+
+                    /// Disclaimer
+                    Text(
+                      heroContent.disclaimerText,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: disclaimerSize,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
                 ),
-                
-                 const SizedBox(height: 24),
-                 
-                const Text(
-                  '※無料・有料版からお選びください',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
-                    height: 1.5,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

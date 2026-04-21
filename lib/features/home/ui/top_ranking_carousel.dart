@@ -1,34 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rearch/flutter_rearch.dart';
-import 'package:rearch_demo/logic/content_capsules.dart';
+import 'package:rearch_demo/logic/ranking_capsules.dart';
 
-class ContentCarousel extends RearchConsumer {
+class TopRankingCarousel extends RearchConsumer {
   final String title;
 
-  const ContentCarousel({
+  const TopRankingCarousel({
     super.key,
-    this.title = '新着',
+    this.title = '人気記事ランキング',
   });
 
   @override
   Widget build(BuildContext context, WidgetHandle use) {
-    final items = use(contentItemsCapsule);
+    final items = use(rankingItemsCapsule);
     final isMobile = MediaQuery.of(context).size.width < 600;
     final isTablet = MediaQuery.of(context).size.width < 1024;
 
     return LayoutBuilder(
       builder: (context, constraints) {
         final horizontalPadding = isMobile ? 12.0 : 16.0;
-        final verticalGap = isMobile ? 8.0 : 12.0;
+        final verticalGap = isMobile ? 12.0 : 16.0;
         final titleFontSize = isMobile ? 18.0 : 22.0;
-        final carouselHeight = isMobile ? 160.0 : isTablet ? 200.0 : 220.0;
-        final cardWidth = isMobile ? 240.0 : isTablet ? 280.0 : 320.0;
-        final itemGap = isMobile ? 10.0 : 12.0;
+        final carouselHeight = isMobile ? 200.0 : isTablet ? 240.0 : 260.0;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// Header
+            /// Section Title
             Padding(
               padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
               child: Text(
@@ -42,18 +40,18 @@ class ContentCarousel extends RearchConsumer {
             ),
             SizedBox(height: verticalGap),
 
-            /// Carousel with responsive sizing
+            /// Horizontal list with responsive sizing
             SizedBox(
               height: carouselHeight,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                 itemCount: items.length,
-                separatorBuilder: (_, __) => SizedBox(width: itemGap),
+                separatorBuilder: (_, __) =>
+                    SizedBox(width: horizontalPadding),
                 itemBuilder: (context, index) {
-                  return _CardItem(
+                  return _RankedCard(
                     item: items[index],
-                    cardWidth: cardWidth,
                     isMobile: isMobile,
                     isTablet: isTablet,
                   );
@@ -67,74 +65,54 @@ class ContentCarousel extends RearchConsumer {
   }
 }
 
-class _CardItem extends StatelessWidget {
-  final CarouselItem item;
-  final double cardWidth;
+class _RankedCard extends StatelessWidget {
+  final RankedItem item;
   final bool isMobile;
   final bool isTablet;
 
-  const _CardItem({
+  const _RankedCard({
     required this.item,
-    required this.cardWidth,
     required this.isMobile,
     required this.isTablet,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Responsive font sizes
-    final dateFontSize = isMobile ? 9.0 : 11.0;
-    final badgeFontSize = isMobile ? 8.0 : 10.0;
-    final titleFontSize = isMobile ? 12.0 : 14.0;
-    final subtitleFontSize = isMobile ? 10.5 : 12.0;
+    // Responsive sizing
+    final cardWidth = isMobile ? 200.0 : isTablet ? 240.0 : 280.0;
+    final rankFontSize = isMobile ? 60.0 : 80.0;
+    final rankTopOffset = isMobile ? -20.0 : -30.0;
+    final cardTopOffset = isMobile ? 45.0 : 60.0;
+    final titleFontSize = isMobile ? 11.0 : 13.0;
+    final subtitleFontSize = isMobile ? 9.5 : 11.0;
+    final dateFontSize = isMobile ? 8.0 : 10.0;
     final padding = isMobile ? 8.0 : 10.0;
-    final gapSize = isMobile ? 3.0 : 4.0;
-    final badgePadding = isMobile ? 4.0 : 6.0;
+    final contentPadding = isMobile ? 3.0 : 4.0;
 
     return SizedBox(
       width: cardWidth,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          /// Header with date and NEW badge
-          Row(
-            children: [
-              if (item.isNew)
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: badgePadding,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(
-                    '最新',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: badgeFontSize,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              if (item.isNew) SizedBox(width: gapSize),
-              Expanded(
-                child: Text(
-                  item.date,
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: dateFontSize,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
+          /// Rank number background
+          Positioned(
+            top: rankTopOffset,
+            left: 0,
+            child: Text(
+              '${item.rank}',
+              style: TextStyle(
+                fontSize: rankFontSize,
+                fontWeight: FontWeight.bold,
+                color: Colors.white.withValues(alpha: 0.85),
               ),
-            ],
+            ),
           ),
-          SizedBox(height: gapSize),
 
-          /// Image Card
-          Expanded(
+          /// Card container
+          Positioned(
+            top: cardTopOffset,
+            left: 0,
+            right: 0,
+            bottom: 0,
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
@@ -145,10 +123,7 @@ class _CardItem extends StatelessWidget {
                 children: [
                   /// Image
                   Positioned.fill(
-                    child: Image.asset(
-                      item.image,
-                      fit: BoxFit.cover,
-                    ),
+                    child: Image.asset(item.image, fit: BoxFit.cover),
                   ),
 
                   /// Gradient overlay
@@ -163,6 +138,19 @@ class _CardItem extends StatelessWidget {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                         ),
+                      ),
+                    ),
+                  ),
+
+                  /// Date (top-right)
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: Text(
+                      item.date,
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: dateFontSize,
                       ),
                     ),
                   ),
@@ -186,7 +174,7 @@ class _CardItem extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(height: gapSize),
+                        SizedBox(height: contentPadding),
                         Text(
                           item.subtitle,
                           maxLines: 2,
@@ -209,18 +197,18 @@ class _CardItem extends StatelessWidget {
   }
 }
 
-class CarouselItem {
+class RankedItem {
+  final int rank;
   final String image;
   final String title;
   final String subtitle;
   final String date;
-  final bool isNew;
 
-  const CarouselItem({
+  const RankedItem({
+    required this.rank,
     required this.image,
     required this.title,
     required this.subtitle,
     required this.date,
-    this.isNew = false,
   });
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rearch_demo/features/home/ui/auto_banner_slider.dart';
 import 'package:rearch_demo/features/home/ui/content_carousel.dart';
 import 'package:rearch_demo/features/home/ui/hero_section.dart';
+import 'package:rearch_demo/features/home/ui/top_ranking_carousel.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -19,19 +20,17 @@ class HomePage extends StatelessWidget {
             const HeroBanner(),
             const SizedBox(height: 16),
             const AutoBannerSlider(
-              images: [
-                'assets/images/banner_1.jpg',
-                'assets/images/banner_2.jpg',
-                'assets/images/banner_3.jpg',
-              ],
               height: 180,
               showIndicators: false,
             ),
             const SizedBox(height: 16),
-            ContentCarousel.test(),
+            const ContentCarousel(title: '新着'),
+            const SizedBox(height: 16),
+            const TopRankingCarousel(title: '人気記事ランキング'),
           ],
         ),
       ),
     );
   }
 }
+
