@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rearch_demo/features/home/ui/auto_banner_slider.dart';
 import 'package:rearch_demo/features/home/ui/content_carousel.dart';
 import 'package:rearch_demo/features/home/ui/hero_section.dart';
+import 'package:rearch_demo/features/home/ui/report_section.dart';
 import 'package:rearch_demo/features/home/ui/top_ranking_carousel.dart';
 
 class HomePage extends StatelessWidget {
@@ -27,6 +28,9 @@ class HomePage extends StatelessWidget {
             const ContentCarousel(title: '新着'),
             const SizedBox(height: 16),
             const TopRankingCarousel(title: '人気記事ランキング'),
+            const SizedBox(height: 16),
+            const ReportSection(),
+            const SizedBox(height: 24),
           ],
         ),
       ),

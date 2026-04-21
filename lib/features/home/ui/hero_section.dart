@@ -47,88 +47,94 @@ class HeroBanner extends RearchConsumer {
                     alpha: heroContent.overlayOpacity),
               ),
 
-              /// Content
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    /// Top small text
-                    Text(
-                      heroContent.smallText,
-                      style: TextStyle(
-                        color: heroContent.accentColor,
-                        fontSize: smallTextSize,
-                        letterSpacing: 0.8,
-                      ),
-                    ),
+              /// Content with overflow handling
+              SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: topGap),
 
-                    SizedBox(height: topGap),
-
-                    /// Main title
-                    Text(
-                      heroContent.mainTitle,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: mainTitleSize,
-                        fontWeight: FontWeight.bold,
-                        height: 1.3,
-                      ),
-                    ),
-
-                    SizedBox(height: titleGap),
-
-                    /// Subtitle
-                    Text(
-                      heroContent.subtitle,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: subtitleSize,
-                        height: 1.5,
-                      ),
-                    ),
-
-                    SizedBox(height: ctaGap),
-
-                    /// CTA Button
-                    ElevatedButton(
-                      onPressed: heroContent.onButtonPressed ?? () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: heroContent.accentColor,
-                        foregroundColor: Colors.black,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: buttonPaddingH,
-                          vertical: buttonPaddingV,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        elevation: 0,
-                      ),
-                      child: Text(
-                        heroContent.buttonText,
+                      /// Top small text
+                      Text(
+                        heroContent.smallText,
                         style: TextStyle(
-                          fontSize: buttonTextSize,
-                          fontWeight: FontWeight.bold,
+                          color: heroContent.accentColor,
+                          fontSize: smallTextSize,
+                          letterSpacing: 0.8,
                         ),
                       ),
-                    ),
 
-                    SizedBox(height: disclaimerGap),
+                      SizedBox(height: topGap),
 
-                    /// Disclaimer
-                    Text(
-                      heroContent.disclaimerText,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: disclaimerSize,
-                        height: 1.5,
+                      /// Main title
+                      Text(
+                        heroContent.mainTitle,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: mainTitleSize,
+                          fontWeight: FontWeight.bold,
+                          height: 1.3,
+                        ),
                       ),
-                    ),
-                  ],
+
+                      SizedBox(height: titleGap),
+
+                      /// Subtitle
+                      Text(
+                        heroContent.subtitle,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: subtitleSize,
+                          height: 1.5,
+                        ),
+                      ),
+
+                      SizedBox(height: ctaGap),
+
+                      /// CTA Button
+                      ElevatedButton(
+                        onPressed: heroContent.onButtonPressed ?? () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: heroContent.accentColor,
+                          foregroundColor: Colors.black,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: buttonPaddingH,
+                            vertical: buttonPaddingV,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          elevation: 0,
+                        ),
+                        child: Text(
+                          heroContent.buttonText,
+                          style: TextStyle(
+                            fontSize: buttonTextSize,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(height: disclaimerGap),
+
+                      /// Disclaimer
+                      Text(
+                        heroContent.disclaimerText,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: disclaimerSize,
+                          height: 1.5,
+                        ),
+                      ),
+
+                      SizedBox(height: topGap),
+                    ],
+                  ),
                 ),
               ),
             ],
