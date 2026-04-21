@@ -12,16 +12,44 @@ class TitleBar extends RearchConsumer implements PreferredSizeWidget {
     final isTablet = MediaQuery.of(context).size.width < 1024;
 
     // Responsive sizing
-    final logoHeight = isMobile ? 24.0 : isTablet ? 28.0 : 32.0;
-    final buttonMinWidth = isMobile ? 80.0 : isTablet ? 100.0 : 120.0;
+    final logoHeight = isMobile
+        ? 24.0
+        : isTablet
+        ? 28.0
+        : 32.0;
+    final buttonMinWidth = isMobile
+        ? 80.0
+        : isTablet
+        ? 100.0
+        : 120.0;
     final buttonMinHeight = isMobile ? 32.0 : 40.0;
-    final buttonPaddingH = isMobile ? 8.0 : isTablet ? 12.0 : 16.0;
-    final buttonTextSize = isMobile ? 9.0 : isTablet ? 10.0 : 12.0;
-    final buttonGap = isMobile ? 6.0 : isTablet ? 8.0 : 12.0;
-    final appBarHeight = isMobile ? 48.0 : isTablet ? 56.0 : 64.0;
+    final buttonPaddingH = isMobile
+        ? 8.0
+        : isTablet
+        ? 12.0
+        : 16.0;
+    final buttonTextSize = isMobile
+        ? 9.0
+        : isTablet
+        ? 10.0
+        : 12.0;
+    final buttonGap = isMobile
+        ? 6.0
+        : isTablet
+        ? 8.0
+        : 12.0;
+    final appBarHeight = isMobile
+        ? 48.0
+        : isTablet
+        ? 56.0
+        : 64.0;
 
     return AppBar(
       toolbarHeight: appBarHeight,
+      animateColor: false,
+      backgroundColor: Colors.white,
+      elevation: 5,
+      foregroundColor: Colors.black,
       title: Image.asset(
         config.logoPath,
         height: logoHeight,
@@ -121,10 +149,7 @@ class _ResponsiveButton extends StatelessWidget {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: textSize,
-          fontWeight: FontWeight.bold,
-        ),
+        style: TextStyle(fontSize: textSize, fontWeight: FontWeight.bold),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:rearch_demo/features/home/ui/auto_banner_slider.dart';
 import 'package:rearch_demo/features/home/ui/content_carousel.dart';
 import 'package:rearch_demo/features/home/ui/hero_section.dart';
 import 'package:rearch_demo/features/home/ui/report_section.dart';
+import 'package:rearch_demo/features/home/ui/search_section.dart';
 import 'package:rearch_demo/features/home/ui/top_ranking_carousel.dart';
 
 class HomePage extends StatelessWidget {
@@ -31,6 +32,7 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 16),
             const ReportSection(),
             const SizedBox(height: 24),
+            const SearchSection()
           ],
         ),
       ),

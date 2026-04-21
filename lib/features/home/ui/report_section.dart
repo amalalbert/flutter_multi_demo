@@ -55,8 +55,8 @@ class ReportSection extends RearchConsumer {
         final cardButtonGap = isMobile ? 12.0 : 16.0;
 
         final buttonTextSize = isMobile ? 11.0 : 12.0;
-
-        /// 🔥 Card width
+        final dividerMargin = isMobile ? 8.0 : 12.0;
+        final dividerHeight = imageHeight + 160;
         final cardWidth = isMobile
             ? constraints.maxWidth * 0.8
             : isTablet
@@ -115,8 +115,8 @@ class ReportSection extends RearchConsumer {
                         if (index != items.length - 1)
                           Container(
                             width: 1,
-                            height: imageHeight + 140, // 👈 match parent height
-                            margin: const EdgeInsets.symmetric(horizontal: 12),
+                            height: dividerHeight,
+                            margin: EdgeInsets.symmetric(horizontal: dividerMargin),
                             color: Colors.black26,
                           ),
                       ],
