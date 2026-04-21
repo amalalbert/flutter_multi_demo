@@ -10,7 +10,6 @@ class MainHomeScreen extends RearchConsumer {
   @override
   Widget build(BuildContext context, WidgetHandle use) {
     // Access navigation state
-
-    return Scaffold(body: HomePage(), appBar: const TitleBar());
+    return Scaffold(body: HomePage(), appBar: const TitleBar(),backgroundColor: Colors.black,);
   }
 }
