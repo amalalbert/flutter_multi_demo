@@ -17,17 +17,32 @@ class HeroBanner extends RearchConsumer {
         final height = isMobile
             ? 320.0
             : isTablet
-                ? 380.0
-                : 420.0;
+            ? 380.0
+            : 420.0;
 
-        final smallTextSize = isMobile ? 11.0 : isTablet ? 12.0 : 14.0;
-        final mainTitleSize = isMobile ? 22.0 : isTablet ? 26.0 : 32.0;
-        final subtitleSize = isMobile ? 11.0 : isTablet ? 12.0 : 14.0;
+        final smallTextSize = isMobile
+            ? 11.0
+            : isTablet
+            ? 12.0
+            : 14.0;
+        final mainTitleSize = isMobile
+            ? 22.0
+            : isTablet
+            ? 26.0
+            : 32.0;
+        final subtitleSize = isMobile
+            ? 11.0
+            : isTablet
+            ? 12.0
+            : 14.0;
         final buttonTextSize = isMobile ? 12.0 : 14.0;
         final disclaimerSize = isMobile ? 11.0 : 13.0;
 
-        final horizontalPadding =
-            isMobile ? 16.0 : isTablet ? 24.0 : 40.0;
+        final horizontalPadding = isMobile
+            ? 16.0
+            : isTablet
+            ? 24.0
+            : 40.0;
 
         final topGap = isMobile ? 12.0 : 16.0;
         final titleGap = isMobile ? 12.0 : 16.0;
@@ -114,10 +129,7 @@ class _HeroContentState extends State<_HeroContent> {
       alignment: Alignment.center,
       children: [
         /// Background
-        Image.asset(
-          c.backgroundImage,
-          fit: BoxFit.cover,
-        ),
+        Image.asset(c.backgroundImage, fit: BoxFit.cover),
 
         /// Gradient (full height, matches content width)
         if (contentWidth > 0)
@@ -131,12 +143,15 @@ class _HeroContentState extends State<_HeroContent> {
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                       colors: [
-                        Colors.transparent,
-                        Colors.black.withOpacity(0.7),
-                        Colors.black.withOpacity(0.7),
-                        Colors.transparent,
+                        Colors.black.withValues(alpha: 0.0),
+                        Colors.black.withValues(alpha:0.95),
+                        Colors.black.withValues(alpha:1.0), 
+                        Colors.black.withValues(alpha:1.0), 
+                        Colors.black.withValues(alpha:1.0), 
+                        Colors.black.withValues(alpha:1.0), 
+                        Colors.black.withValues(alpha:0.0), 
                       ],
-                      stops: [0.0, 0.25, 0.75, 1.0],
+                      stops: [0.0, 0.37, 0.39, 0.48, 0.51, 0.61, 1.0],
                     ),
                   ),
                 ),
@@ -147,8 +162,7 @@ class _HeroContentState extends State<_HeroContent> {
         /// Content (measured + scaled)
         Center(
           child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: widget.horizontalPadding),
+            padding: EdgeInsets.symmetric(horizontal: widget.horizontalPadding),
             child: MeasureSize(
               onChange: (size) {
                 if (contentWidth != size.width) {
@@ -253,11 +267,7 @@ class MeasureSize extends StatefulWidget {
   final Widget child;
   final Function(Size) onChange;
 
-  const MeasureSize({
-    required this.child,
-    required this.onChange,
-    super.key,
-  });
+  const MeasureSize({required this.child, required this.onChange, super.key});
 
   @override
   State<MeasureSize> createState() => _MeasureSizeState();

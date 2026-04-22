@@ -22,7 +22,7 @@ class TitleBarConfig {
   final Color primaryButtonColor;
 
   const TitleBarConfig({
-    this.logoPath = 'assets/images/logo.png',
+    this.logoPath = 'assets/images/funai_soken_logo.svg',
     this.primaryButton = const TitleBarButtonConfig(
       label: '新規会員申込み',
     ),

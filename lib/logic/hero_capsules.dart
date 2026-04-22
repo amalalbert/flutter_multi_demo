@@ -14,7 +14,7 @@ class HeroContent {
   final VoidCallback? onButtonPressed;
 
   const HeroContent({
-    this.backgroundImage = 'assets/images/hero_bg.jpg',
+    this.backgroundImage = 'assets/images/banner.png',
     this.smallText = 'Business Media of Funai Soken',
     this.mainTitle = '船井総研の\n経営メディア',
     this.subtitle =
