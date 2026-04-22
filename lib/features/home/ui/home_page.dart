@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:rearch_demo/features/home/ui/auto_banner_slider.dart';
 import 'package:rearch_demo/features/home/ui/content_carousel.dart';
+import 'package:rearch_demo/features/home/ui/cta_section.dart';
 import 'package:rearch_demo/features/home/ui/hero_section.dart';
+import 'package:rearch_demo/features/home/ui/industry_section.dart';
 import 'package:rearch_demo/features/home/ui/report_section.dart';
 import 'package:rearch_demo/features/home/ui/search_section.dart';
 import 'package:rearch_demo/features/home/ui/top_ranking_carousel.dart';
+import 'package:rearch_demo/logic/industry_capsules.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -21,10 +24,7 @@ class HomePage extends StatelessWidget {
           children: [
             const HeroBanner(),
             const SizedBox(height: 16),
-            const AutoBannerSlider(
-              height: 180,
-              showIndicators: false,
-            ),
+            const AutoBannerSlider(height: 180, showIndicators: false),
             const SizedBox(height: 16),
             const ContentCarousel(title: '新着'),
             const SizedBox(height: 16),
@@ -32,7 +32,16 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 16),
             const ReportSection(),
             const SizedBox(height: 24),
-            const SearchSection()
+            const SearchSection(),
+            const SizedBox(height: 24),
+            const IndustrySection(),
+            const SizedBox(height: 24),
+            IndustrySection(
+              categoriesCapsule: themeCategoriesCapsule,
+              configCapsule: themeSectionConfigCapsule,
+            ),
+            const SizedBox(height: 24),
+            CTASection(),
           ],
         ),
       ),
