@@ -5,10 +5,7 @@ import 'package:rearch_demo/logic/content_capsules.dart';
 class ContentCarousel extends RearchConsumer {
   final String title;
 
-  const ContentCarousel({
-    super.key,
-    this.title = '新着',
-  });
+  const ContentCarousel({super.key, this.title = '新着'});
 
   @override
   Widget build(BuildContext context, WidgetHandle use) {
@@ -21,8 +18,16 @@ class ContentCarousel extends RearchConsumer {
         final horizontalPadding = isMobile ? 12.0 : 16.0;
         final verticalGap = isMobile ? 8.0 : 12.0;
         final titleFontSize = isMobile ? 18.0 : 22.0;
-        final carouselHeight = isMobile ? 160.0 : isTablet ? 200.0 : 220.0;
-        final cardWidth = isMobile ? 240.0 : isTablet ? 280.0 : 320.0;
+        final carouselHeight = isMobile
+            ? 160.0
+            : isTablet
+            ? 200.0
+            : 220.0;
+        final cardWidth = isMobile
+            ? 240.0
+            : isTablet
+            ? 280.0
+            : 320.0;
         final itemGap = isMobile ? 10.0 : 12.0;
 
         return Column(
@@ -85,8 +90,8 @@ class _CardItem extends StatelessWidget {
     // Responsive font sizes
     final dateFontSize = isMobile ? 9.0 : 11.0;
     final badgeFontSize = isMobile ? 8.0 : 10.0;
-    final titleFontSize = isMobile ? 12.0 : 14.0;
-    final subtitleFontSize = isMobile ? 10.5 : 12.0;
+    final titleFontSize = isMobile ? 8.0 : 10.0;
+    final subtitleFontSize = isMobile ? 8.5 : 10.0;
     final padding = isMobile ? 8.0 : 10.0;
     final gapSize = isMobile ? 3.0 : 4.0;
     final badgePadding = isMobile ? 4.0 : 6.0;
@@ -135,72 +140,81 @@ class _CardItem extends StatelessWidget {
 
           /// Image Card
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.black,
-              ),
-              clipBehavior: Clip.hardEdge,
-              child: Stack(
-                children: [
-                  /// Image
-                  Positioned.fill(
+            child: Column(
+              children: [
+                /// Image → 60%
+                Expanded(
+                  flex: 6,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(12),
+                      ),
+                      color: Colors.black,
+                    ),
+                    clipBehavior: Clip.hardEdge,
                     child: Image.asset(
                       item.image,
                       fit: BoxFit.cover,
+                      width: double.infinity,
                     ),
                   ),
+                ),
 
-                  /// Gradient overlay
-                  Positioned.fill(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.transparent,
-                            Colors.black.withValues(alpha: 0.7),
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
+                /// Text Section → 40%
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(padding),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(12),
                       ),
                     ),
-                  ),
-
-                  /// Bottom text
-                  Positioned(
-                    bottom: padding,
-                    left: padding,
-                    right: padding,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
                       children: [
+                        /// Title
                         Text(
                           item.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: titleFontSize,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(height: gapSize),
-                        Text(
-                          item.subtitle,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: subtitleFontSize,
+                        Spacer(),
+                        /// Chip
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: isMobile ? 10 : 12,
+                              vertical: isMobile ? 4 : 5,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              item.catagory,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: badgeFontSize,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
@@ -215,12 +229,14 @@ class CarouselItem {
   final String subtitle;
   final String date;
   final bool isNew;
+  final String catagory;
 
   const CarouselItem({
     required this.image,
     required this.title,
     required this.subtitle,
     required this.date,
+    required this.catagory,
     this.isNew = false,
   });
 }
