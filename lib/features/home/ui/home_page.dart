@@ -35,7 +35,10 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 24),
             const SearchSection(),
             const SizedBox(height: 24),
-            const IndustrySection(),
+            const IndustrySection(
+              categoriesCapsule: industryCategoriesCapsule,
+              configCapsule: industrySectionConfigCapsule,
+            ),
             const SizedBox(height: 24),
             IndustrySection(
               categoriesCapsule: themeCategoriesCapsule,
