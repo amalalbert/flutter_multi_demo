@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rearch_demo/features/home/ui/auto_banner_slider.dart';
 import 'package:rearch_demo/features/home/ui/content_carousel.dart';
 import 'package:rearch_demo/features/home/ui/cta_section.dart';
+import 'package:rearch_demo/features/home/ui/footer_section.dart';
 import 'package:rearch_demo/features/home/ui/hero_section.dart';
 import 'package:rearch_demo/features/home/ui/industry_section.dart';
 import 'package:rearch_demo/features/home/ui/report_section.dart';
@@ -42,6 +43,8 @@ class HomePage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             CTASection(),
+            const FooterSection(),
+            
           ],
         ),
       ),

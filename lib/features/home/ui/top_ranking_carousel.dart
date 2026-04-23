@@ -10,8 +10,10 @@ class TopRankingCarousel extends RearchConsumer {
   @override
   Widget build(BuildContext context, WidgetHandle use) {
     final items = use(rankingItemsCapsule);
-    final isMobile = MediaQuery.of(context).size.width < 600;
-    final isTablet = MediaQuery.of(context).size.width < 1024;
+    final width = MediaQuery.of(context).size.width;
+
+    final isMobile = width < 600;
+    final isTablet = width >= 600 && width < 1024;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -25,16 +27,10 @@ class TopRankingCarousel extends RearchConsumer {
             : isTablet
             ? 16.0
             : 20.0;
-        final titleFontSize = isMobile
-            ? 18.0
-            : isTablet
-            ? 20.0
-            : 24.0;
-        final carouselHeight = isMobile
-            ? 220.0
-            : isTablet
-            ? 260.0
-            : 300.0;
+
+        final carouselHeight = (constraints.maxWidth * 0.4).clamp(200.0, 320.0);
+
+        final titleFontSize = (constraints.maxWidth * 0.02).clamp(18.0, 24.0);
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

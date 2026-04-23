@@ -8,24 +8,34 @@ class CTASection extends RearchConsumer {
   @override
   Widget build(BuildContext context, WidgetHandle use) {
     final config = use(ctaSectionConfigCapsule);
-    final isMobile = MediaQuery.of(context).size.width < 600;
-    final isTablet = MediaQuery.of(context).size.width < 1024;
 
     return LayoutBuilder(
       builder: (context, constraints) {
         // Responsive sizing
-        final sectionHeight = isMobile ? 280.0 : isTablet ? 320.0 : 380.0;
-        final verticalPadding = isMobile ? 20.0 : isTablet ? 28.0 : 36.0;
-        final horizontalPadding = isMobile ? 16.0 : isTablet ? 24.0 : 32.0;
-        final mainTextFontSize = isMobile ? 13.0 : isTablet ? 14.0 : 16.0;
-        final mainTextLineHeight = isMobile ? 1.5 : 1.6;
-        final textGap = isMobile ? 16.0 : isTablet ? 20.0 : 24.0;
-        final buttonPaddingH = isMobile ? 32.0 : isTablet ? 40.0 : 48.0;
-        final buttonPaddingV = isMobile ? 12.0 : 14.0;
-        final buttonFontSize = isMobile ? 13.0 : isTablet ? 14.0 : 15.0;
-        final buttonRadius = isMobile ? 24.0 : 30.0;
-        final subtextFontSize = isMobile ? 10.0 : isTablet ? 10.5 : 11.0;
-        final subtextGap = isMobile ? 10.0 : 12.0;
+        final width = constraints.maxWidth;
+
+        /// ---- Scaling factor (core idea) ----
+        final scale = (width / 1000).clamp(0.85, 1.25);
+
+        /// ---- Heights ----
+        final sectionHeight = (width * 0.35).clamp(260.0, 420.0);
+
+        /// ---- Spacing ----
+        final verticalPadding = 24.0 * scale;
+        final horizontalPadding = 20.0 * scale;
+        final textGap = 20.0 * scale;
+        final subtextGap = 12.0 * scale;
+
+        /// ---- Typography ----
+        final mainTextFontSize = (14.0 * scale).clamp(13.0, 17.0);
+        final mainTextLineHeight = 1.5 + ((scale - 1) * 0.2);
+        final subtextFontSize = (10.5 * scale).clamp(10.0, 12.0);
+
+        /// ---- Button ----
+        final buttonPaddingH = 40.0 * scale;
+        final buttonPaddingV = 13.0 * scale;
+        final buttonFontSize = (14.0 * scale).clamp(13.0, 16.0);
+        final buttonRadius = 26.0 * scale;
 
         return SizedBox(
           height: sectionHeight,
@@ -34,14 +44,13 @@ class CTASection extends RearchConsumer {
             fit: StackFit.expand,
             children: [
               /// 🔥 Background Image
-              Image.asset(
-                config.backgroundImagePath,
-                fit: BoxFit.cover,
-              ),
+              Image.asset(config.backgroundImagePath, fit: BoxFit.cover),
 
               /// 🔥 Dark overlay
               Container(
-                color: config.backgroundColor.withOpacity(config.overlayOpacity),
+                color: config.backgroundColor.withOpacity(
+                  config.overlayOpacity,
+                ),
               ),
 
               /// 🔥 Content

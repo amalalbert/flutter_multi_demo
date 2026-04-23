@@ -15,20 +15,14 @@ class ContentCarousel extends RearchConsumer {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final horizontalPadding = isMobile ? 12.0 : 16.0;
-        final verticalGap = isMobile ? 8.0 : 12.0;
-        final titleFontSize = isMobile ? 18.0 : 22.0;
-        final carouselHeight = isMobile
-            ? 160.0
-            : isTablet
-            ? 200.0
-            : 220.0;
-        final cardWidth = isMobile
-            ? 240.0
-            : isTablet
-            ? 280.0
-            : 320.0;
-        final itemGap = isMobile ? 10.0 : 12.0;
+        final scale = (constraints.maxWidth / 1000).clamp(0.85, 1.2);
+
+        final horizontalPadding = 16 * scale;
+        final verticalGap = 10 * scale;
+        final titleFontSize = 20 * scale;
+        final carouselHeight = (constraints.maxWidth * 0.3).clamp(160, 260).toDouble();
+        final cardWidth = (constraints.maxWidth * 0.5).clamp(220, 320).toDouble();
+        final itemGap = 12 * scale;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,6 +182,7 @@ class _CardItem extends StatelessWidget {
                           ),
                         ),
                         Spacer(),
+
                         /// Chip
                         Align(
                           alignment: Alignment.bottomRight,

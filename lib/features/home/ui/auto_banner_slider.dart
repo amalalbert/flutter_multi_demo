@@ -143,7 +143,6 @@ class _AutoBannerSliderContentState extends State<_AutoBannerSliderContent> {
               return Padding(
                 padding: widget.padding,
                 child: ClipRRect(
-                  borderRadius: widget.borderRadius,
                   child: Image.asset(
                     widget.images?[index] ?? '',
                     fit: BoxFit.cover,
@@ -174,9 +173,7 @@ class _AutoBannerSliderContentState extends State<_AutoBannerSliderContent> {
                     decoration: BoxDecoration(
                       color: _currentPage == index
                           ? Colors.white
-                          : Colors.white54,
-                      borderRadius: BorderRadius.circular(
-                          widget.indicatorSize / 2),
+                          : Colors.white54
                     ),
                   );
                 }),
