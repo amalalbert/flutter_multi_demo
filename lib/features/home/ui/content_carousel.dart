@@ -226,7 +226,6 @@ class _CardItem extends StatelessWidget {
 class CarouselItem {
   final String image;
   final String title;
-  final String subtitle;
   final String date;
   final bool isNew;
   final String catagory;
@@ -234,7 +233,6 @@ class CarouselItem {
   const CarouselItem({
     required this.image,
     required this.title,
-    required this.subtitle,
     required this.date,
     required this.catagory,
     this.isNew = false,

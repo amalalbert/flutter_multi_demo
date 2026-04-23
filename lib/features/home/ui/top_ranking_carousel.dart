@@ -5,10 +5,7 @@ import 'package:rearch_demo/logic/ranking_capsules.dart';
 class TopRankingCarousel extends RearchConsumer {
   final String title;
 
-  const TopRankingCarousel({
-    super.key,
-    this.title = '人気記事ランキング',
-  });
+  const TopRankingCarousel({super.key, this.title = '人気記事ランキング'});
 
   @override
   Widget build(BuildContext context, WidgetHandle use) {
@@ -18,10 +15,14 @@ class TopRankingCarousel extends RearchConsumer {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final horizontalPadding = isMobile ? 12.0 : 16.0;
-        final verticalGap = isMobile ? 12.0 : 16.0;
-        final titleFontSize = isMobile ? 18.0 : 22.0;
-        final carouselHeight = isMobile ? 200.0 : isTablet ? 240.0 : 260.0;
+        final horizontalPadding = isMobile ? 12.0 : isTablet ? 16.0 : 20.0;
+        final verticalGap = isMobile ? 12.0 : isTablet ? 16.0 : 20.0;
+        final titleFontSize = isMobile ? 18.0 : isTablet ? 20.0 : 24.0;
+        final carouselHeight = isMobile
+            ? 220.0
+            : isTablet
+            ? 260.0
+            : 300.0;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,8 +48,7 @@ class TopRankingCarousel extends RearchConsumer {
                 scrollDirection: Axis.horizontal,
                 padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                 itemCount: items.length,
-                separatorBuilder: (_, __) =>
-                    SizedBox(width: horizontalPadding),
+                separatorBuilder: (_, __) => SizedBox(width: horizontalPadding),
                 itemBuilder: (context, index) {
                   return _RankedCard(
                     item: items[index],
@@ -79,15 +79,18 @@ class _RankedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Responsive sizing
-    final cardWidth = isMobile ? 200.0 : isTablet ? 240.0 : 280.0;
+    final cardWidth = isMobile
+        ? 240.0
+        : isTablet
+        ? 280.0
+        : 320.0;
     final rankFontSize = isMobile ? 60.0 : 80.0;
     final rankTopOffset = isMobile ? -20.0 : -30.0;
     final cardTopOffset = isMobile ? 45.0 : 60.0;
     final titleFontSize = isMobile ? 11.0 : 13.0;
-    final subtitleFontSize = isMobile ? 9.5 : 11.0;
+    final badgeFontSize = isMobile ? 8.0 : 10.0;
     final dateFontSize = isMobile ? 8.0 : 10.0;
     final padding = isMobile ? 8.0 : 10.0;
-    final contentPadding = isMobile ? 3.0 : 4.0;
 
     return SizedBox(
       width: cardWidth,
@@ -126,22 +129,6 @@ class _RankedCard extends StatelessWidget {
                     child: Image.asset(item.image, fit: BoxFit.cover),
                   ),
 
-                  /// Gradient overlay
-                  Positioned.fill(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.transparent,
-                            Colors.black.withValues(alpha: 0.7),
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                      ),
-                    ),
-                  ),
-
                   /// Date (top-right)
                   Positioned(
                     top: 8,
@@ -156,32 +143,80 @@ class _RankedCard extends StatelessWidget {
                   ),
 
                   /// Bottom text
-                  Positioned(
-                    bottom: padding,
-                    left: padding,
-                    right: padding,
+                  Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          item.title,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: titleFontSize,
+                        /// Image → 60%
+                        Expanded(
+                          flex: 6,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(12),
+                              ),
+                              color: Colors.black,
+                            ),
+                            clipBehavior: Clip.hardEdge,
+                            child: Image.asset(
+                              item.image,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                            ),
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(height: contentPadding),
-                        Text(
-                          item.subtitle,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: subtitleFontSize,
+
+                        /// Text Section → 40%
+                        Expanded(
+                          flex: 4,
+                          child: Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.all(padding),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.vertical(
+                                bottom: Radius.circular(12),
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                /// Title
+                                Text(
+                                  item.title,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: titleFontSize,
+                                  ),
+                                ),
+                                Spacer(),
+
+                                /// Chip
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: isMobile ? 10 : 12,
+                                      vertical: isMobile ? 4 : 5,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Text(
+                                      item.catagory,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: badgeFontSize,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -201,14 +236,14 @@ class RankedItem {
   final int rank;
   final String image;
   final String title;
-  final String subtitle;
   final String date;
+  final String catagory;
 
   const RankedItem({
     required this.rank,
     required this.image,
     required this.title,
-    required this.subtitle,
     required this.date,
+    required this.catagory,
   });
 }
