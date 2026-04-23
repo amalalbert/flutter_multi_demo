@@ -1,7 +1,6 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_rearch/flutter_rearch.dart';
-import 'package:rearch_demo/features/posts/ui/post_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rearch_demo/shared/utils.dart';
 import 'package:rearch_demo/ui/home_screen.dart';
 
@@ -19,6 +18,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'ReArch API Demo',
       theme: ThemeData(
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(fontFamily: 'NotoSansJP'),
+          titleLarge: TextStyle(fontFamily: 'NotoSansJP'),
+        ),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
