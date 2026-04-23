@@ -15,9 +15,21 @@ class TopRankingCarousel extends RearchConsumer {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final horizontalPadding = isMobile ? 12.0 : isTablet ? 16.0 : 20.0;
-        final verticalGap = isMobile ? 12.0 : isTablet ? 16.0 : 20.0;
-        final titleFontSize = isMobile ? 18.0 : isTablet ? 20.0 : 24.0;
+        final horizontalPadding = isMobile
+            ? 12.0
+            : isTablet
+            ? 16.0
+            : 20.0;
+        final verticalGap = isMobile
+            ? 12.0
+            : isTablet
+            ? 16.0
+            : 20.0;
+        final titleFontSize = isMobile
+            ? 18.0
+            : isTablet
+            ? 20.0
+            : 24.0;
         final carouselHeight = isMobile
             ? 220.0
             : isTablet
@@ -122,104 +134,80 @@ class _RankedCard extends StatelessWidget {
                 color: Colors.black,
               ),
               clipBehavior: Clip.hardEdge,
-              child: Stack(
+              child: Column(
                 children: [
-                  /// Image
-                  Positioned.fill(
-                    child: Image.asset(item.image, fit: BoxFit.cover),
-                  ),
-
-                  /// Date (top-right)
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: Text(
-                      item.date,
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: dateFontSize,
-                      ),
-                    ),
-                  ),
-
-                  /// Bottom text
+                  /// Image → 60%
                   Expanded(
-                    child: Column(
+                    flex: 6,
+                    child: Stack(
                       children: [
-                        /// Image → 60%
-                        Expanded(
-                          flex: 6,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(12),
-                              ),
-                              color: Colors.black,
-                            ),
-                            clipBehavior: Clip.hardEdge,
-                            child: Image.asset(
-                              item.image,
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                            ),
-                          ),
+                        Positioned.fill(
+                          child: Image.asset(item.image, fit: BoxFit.cover),
                         ),
 
-                        /// Text Section → 40%
-                        Expanded(
-                          flex: 4,
-                          child: Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.all(padding),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.vertical(
-                                bottom: Radius.circular(12),
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                /// Title
-                                Text(
-                                  item.title,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: titleFontSize,
-                                  ),
-                                ),
-                                Spacer(),
-
-                                /// Chip
-                                Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: isMobile ? 10 : 12,
-                                      vertical: isMobile ? 4 : 5,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Text(
-                                      item.catagory,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: badgeFontSize,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                        /// Date (top-right)
+                        Positioned(
+                          top: 8,
+                          right: 8,
+                          child: Text(
+                            item.date,
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: dateFontSize,
                             ),
                           ),
                         ),
                       ],
+                    ),
+                  ),
+
+                  /// Text → 40%
+                  Expanded(
+                    flex: 4,
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(padding),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          /// Title
+                          Text(
+                            item.title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: titleFontSize,
+                            ),
+                          ),
+
+                          Spacer(),
+
+                          /// Chip
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: isMobile ? 10 : 12,
+                                vertical: isMobile ? 4 : 5,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(
+                                item.catagory,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: badgeFontSize,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
