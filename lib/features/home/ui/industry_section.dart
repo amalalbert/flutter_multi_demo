@@ -15,8 +15,8 @@ class IndustrySection extends RearchConsumer {
 
   @override
   Widget build(BuildContext context, WidgetHandle use) {
-    final categories = use(categoriesCapsule!);
-    final config = use(configCapsule!);
+    final categories = use(categoriesCapsule);
+    final config = use(configCapsule);
     final isMobile = MediaQuery.of(context).size.width < 600;
     final isTablet = MediaQuery.of(context).size.width < 1024;
 
@@ -126,26 +126,33 @@ class _CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final borderRadius = BorderRadius.circular(24);
+    // InkWell splashes paint *behind* a normal child on [Material], so opaque
+    // [Text] hides the ripple. [Ink] merges with the splash layer so the ripple
+    // shows on top of the chip background.
     return Material(
-      color: backgroundColor,
-      borderRadius: BorderRadius.circular(24),
+      color: Colors.transparent,
+      borderRadius: borderRadius,
+      clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () {
-          print("Clicked with ripple");
+          debugPrint('Clicked Item with ripple');
         },
-        borderRadius: BorderRadius.circular(24),
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: paddingH,
-            vertical: paddingV,
-          ),
+        borderRadius: borderRadius,
+        child: Ink(
           decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(24),
+            color: backgroundColor,
+            borderRadius: borderRadius,
           ),
-          child: Text(
-            label,
-            style: TextStyle(color: textColor, fontSize: fontSize),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: paddingH,
+              vertical: paddingV,
+            ),
+            child: Text(
+              label,
+              style: TextStyle(color: textColor, fontSize: fontSize),
+            ),
           ),
         ),
       ),

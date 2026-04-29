@@ -20,8 +20,12 @@ class ContentCarousel extends RearchConsumer {
         final horizontalPadding = 16 * scale;
         final verticalGap = 10 * scale;
         final titleFontSize = 20 * scale;
-        final carouselHeight = (constraints.maxWidth * 0.3).clamp(160, 260).toDouble();
-        final cardWidth = (constraints.maxWidth * 0.5).clamp(220, 320).toDouble();
+        final carouselHeight = (constraints.maxWidth * 0.3)
+            .clamp(160, 260)
+            .toDouble();
+        final cardWidth = (constraints.maxWidth * 0.5)
+            .clamp(220, 320)
+            .toDouble();
         final itemGap = 12 * scale;
 
         return Column(
@@ -85,7 +89,6 @@ class _CardItem extends StatelessWidget {
     final dateFontSize = isMobile ? 9.0 : 11.0;
     final badgeFontSize = isMobile ? 8.0 : 10.0;
     final titleFontSize = isMobile ? 8.0 : 10.0;
-    final subtitleFontSize = isMobile ? 8.5 : 10.0;
     final padding = isMobile ? 8.0 : 10.0;
     final gapSize = isMobile ? 3.0 : 4.0;
     final badgePadding = isMobile ? 4.0 : 6.0;
@@ -132,84 +135,103 @@ class _CardItem extends StatelessWidget {
           ),
           SizedBox(height: gapSize),
 
-          /// Image Card
+          /// Image Card — splash must sit *above* opaque image/text, so we stack
+          /// a transparent [InkWell] on top of the visuals ([IgnorePointer]).
           Expanded(
-            child: Column(
-              children: [
-                /// Image → 60%
-                Expanded(
-                  flex: 6,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(12),
-                      ),
-                      color: Colors.black,
-                    ),
-                    clipBehavior: Clip.hardEdge,
-                    child: Image.asset(
-                      item.image,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                    ),
-                  ),
-                ),
-
-                /// Text Section → 40%
-                Expanded(
-                  flex: 4,
-                  child: Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.all(padding),
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.vertical(
-                        bottom: Radius.circular(12),
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        /// Title
-                        Text(
-                          item.title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: titleFontSize,
-                          ),
-                        ),
-                        Spacer(),
-
-                        /// Chip
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: isMobile ? 10 : 12,
-                              vertical: isMobile ? 4 : 5,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Text(
-                              item.catagory,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: badgeFontSize,
-                                fontWeight: FontWeight.w500,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Positioned.fill(
+                    child: IgnorePointer(
+                      child: ColoredBox(
+                        color: Colors.black,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              flex: 6,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.black,
+                                ),
+                                clipBehavior: Clip.hardEdge,
+                                child: Image.asset(
+                                  item.image,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                ),
                               ),
                             ),
-                          ),
+                            Expanded(
+                              flex: 4,
+                              child: Container(
+                                width: double.infinity,
+                                padding: EdgeInsets.all(padding),
+                                decoration: const BoxDecoration(
+                                  color: Colors.black,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item.title,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: titleFontSize,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: isMobile ? 10 : 12,
+                                          vertical: isMobile ? 4 : 5,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade300,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: Text(
+                                          item.catagory,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: badgeFontSize,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  Positioned.fill(
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashColor: Colors.white24,
+                        highlightColor: Colors.white10,
+                        borderRadius: BorderRadius.circular(12),
+                        onTap: () {
+                          debugPrint('Content carousel card tapped');
+                        },
+                        child: const SizedBox.expand(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
