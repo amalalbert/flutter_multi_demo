@@ -226,7 +226,6 @@ class _CardItem extends StatelessWidget {
                         onTap: () {
                           debugPrint('Content carousel card tapped');
                         },
-                        child: const SizedBox.expand(),
                       ),
                     ),
                   ),
