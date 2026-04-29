@@ -139,6 +139,7 @@ class _CardItem extends StatelessWidget {
           /// a transparent [InkWell] on top of the visuals ([IgnorePointer]).
           Expanded(
             child: ClipRRect(
+              clipBehavior: Clip.antiAlias,
               borderRadius: BorderRadius.circular(12),
               child: Stack(
                 fit: StackFit.expand,
@@ -187,6 +188,7 @@ class _CardItem extends StatelessWidget {
                                     const Spacer(),
                                     Align(
                                       alignment: Alignment.bottomRight,
+
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
                                           horizontal: isMobile ? 10 : 12,
@@ -194,8 +196,9 @@ class _CardItem extends StatelessWidget {
                                         ),
                                         decoration: BoxDecoration(
                                           color: Colors.grey.shade300,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
                                         ),
                                         child: Text(
                                           item.catagory,
