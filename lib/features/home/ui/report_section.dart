@@ -79,6 +79,7 @@ class ReportSection extends RearchConsumer {
                   color: config.textColor,
                   fontSize: titleSize,
                   fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.none,
                 ),
               ),
 
@@ -183,6 +184,8 @@ class _ReportCard extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: cardTitleSize,
+            color: Colors.black87,
+            decoration: TextDecoration.none,
           ),
         ),
 
@@ -194,7 +197,7 @@ class _ReportCard extends StatelessWidget {
             item.description,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: cardDescSize),
+            style: TextStyle(fontSize: cardDescSize, color: Colors.black87, decoration: TextDecoration.none),
           ),
         ),
 
@@ -217,6 +220,7 @@ class _ReportCard extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: buttonTextSize,
+                decoration: TextDecoration.none,
               ),
             ),
           ),

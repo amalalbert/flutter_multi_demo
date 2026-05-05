@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rearch/flutter_rearch.dart';
+import 'package:rearch_demo/features/home/ui/mock_SSO_page.dart';
 import 'package:rearch_demo/logic/title_bar_capsules.dart';
 
 class TitleBar extends RearchConsumer implements PreferredSizeWidget {
@@ -115,7 +116,12 @@ class _ResponsiveButton extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isOutlined) {
       return OutlinedButton(
-        onPressed: onPressed ?? () {},
+        onPressed: () {
+          debugPrint('Button "$label" pressed');
+          Navigator.of(context).push(
+            MaterialPageRoute<void>(builder: (context) => const MockSSOPage()),
+          );
+        },
         style: OutlinedButton.styleFrom(
           minimumSize: Size(minWidth, minHeight),
           padding: EdgeInsets.symmetric(horizontal: paddingH),
@@ -130,6 +136,7 @@ class _ResponsiveButton extends StatelessWidget {
             fontSize: textSize,
             fontWeight: FontWeight.bold,
             color: Colors.black,
+            decoration: TextDecoration.none,
           ),
         ),
       );
@@ -149,7 +156,7 @@ class _ResponsiveButton extends StatelessWidget {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: textSize, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: textSize, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
       ),
     );
   }

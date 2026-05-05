@@ -1,7 +1,8 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_rearch/flutter_rearch.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:rearch_demo/shared/utils.dart';
+import 'package:rearch_demo/ui/app_router.dart';
 import 'package:rearch_demo/ui/home_screen.dart';
 
 Future<void> main() async {
@@ -15,18 +16,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ReArch API Demo',
+    return MaterialApp.router(
+      title: 'Funai Soken video portal',
       theme: ThemeData(
         textTheme: const TextTheme(
-          bodyMedium: TextStyle(fontFamily: 'NotoSansJP'),
-          titleLarge: TextStyle(fontFamily: 'NotoSansJP'),
+          bodyMedium: TextStyle(fontFamily: 'NotoSansJP',decoration: TextDecoration.none),
+          titleLarge: TextStyle(fontFamily: 'NotoSansJP',decoration: TextDecoration.none,)
         ),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      // Point to your feature's entry widget
-      home: const MainHomeScreen(),
+      routerConfig: appRouter,
     );
   }
 }

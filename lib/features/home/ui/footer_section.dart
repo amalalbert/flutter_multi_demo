@@ -29,8 +29,9 @@ class FooterSection extends StatelessWidget {
             child: Text(
               "©2026 Funai Soken",
               style: TextStyle(
-                color: Colors.white.withOpacity(0.7),
+                color: Colors.white.withValues(alpha: 0.7),
                 fontSize: isMobile ? 11 : 12,
+                decoration: TextDecoration.none,
               ),
             ),
           ),
@@ -110,7 +111,7 @@ class _FooterLinkState extends State<_FooterLink> {
             color: isHovered ? Colors.white : Colors.white70,
             fontSize: 14,
             decoration:
-                isHovered ? TextDecoration.underline : TextDecoration.none,
+                isHovered ? TextDecoration.none : TextDecoration.none,
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),

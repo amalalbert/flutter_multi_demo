@@ -76,6 +76,7 @@ class IndustrySection extends RearchConsumer {
                   color: config.textColor,
                   fontSize: titleFontSize,
                   fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.none,
                 ),
               ),
 
@@ -151,7 +152,7 @@ class _CategoryChip extends StatelessWidget {
             ),
             child: Text(
               label,
-              style: TextStyle(color: textColor, fontSize: fontSize),
+              style: TextStyle(color: textColor, fontSize: fontSize,decoration: TextDecoration.none,),
             ),
           ),
         ),

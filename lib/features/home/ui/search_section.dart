@@ -65,6 +65,7 @@ class SearchSection extends RearchConsumer {
                   color: config.textColor,
                   fontSize: titleFontSize,
                   fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.none,
                 ),
               ),
 

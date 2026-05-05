@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rearch/flutter_rearch.dart';
 import 'package:rearch_demo/logic/hero_capsules.dart';
+import 'package:rearch_demo/ui/placeholder_screen.dart';
 
 class HeroBanner extends RearchConsumer {
   const HeroBanner({super.key});
@@ -144,12 +145,12 @@ class _HeroContentState extends State<_HeroContent> {
                       end: Alignment.centerRight,
                       colors: [
                         Colors.black.withValues(alpha: 0.0),
-                        Colors.black.withValues(alpha:0.95),
-                        Colors.black.withValues(alpha:1.0), 
-                        Colors.black.withValues(alpha:1.0), 
-                        Colors.black.withValues(alpha:1.0), 
-                        Colors.black.withValues(alpha:1.0), 
-                        Colors.black.withValues(alpha:0.0), 
+                        Colors.black.withValues(alpha: 0.95),
+                        Colors.black.withValues(alpha: 1.0),
+                        Colors.black.withValues(alpha: 1.0),
+                        Colors.black.withValues(alpha: 1.0),
+                        Colors.black.withValues(alpha: 1.0),
+                        Colors.black.withValues(alpha: 0.0),
                       ],
                       stops: [0.0, 0.37, 0.39, 0.48, 0.51, 0.61, 1.0],
                     ),
@@ -184,6 +185,7 @@ class _HeroContentState extends State<_HeroContent> {
                           color: c.accentColor,
                           fontSize: widget.smallTextSize,
                           letterSpacing: 0.8,
+                          decoration: TextDecoration.none,
                         ),
                       ),
 
@@ -197,6 +199,7 @@ class _HeroContentState extends State<_HeroContent> {
                           fontSize: widget.mainTitleSize,
                           fontWeight: FontWeight.bold,
                           height: 1.3,
+                          decoration: TextDecoration.none,
                         ),
                       ),
 
@@ -209,13 +212,20 @@ class _HeroContentState extends State<_HeroContent> {
                           color: Colors.white70,
                           fontSize: widget.subtitleSize,
                           height: 1.5,
+                          decoration: TextDecoration.none,
                         ),
                       ),
 
                       SizedBox(height: widget.ctaGap),
 
                       ElevatedButton(
-                        onPressed: c.onButtonPressed ?? () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (context) => const PlaceholderScreen(),
+                            ),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: c.accentColor,
                           foregroundColor: Colors.black,
@@ -233,6 +243,7 @@ class _HeroContentState extends State<_HeroContent> {
                           style: TextStyle(
                             fontSize: widget.buttonTextSize,
                             fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.none,
                           ),
                         ),
                       ),
@@ -246,6 +257,7 @@ class _HeroContentState extends State<_HeroContent> {
                           color: Colors.white,
                           fontSize: widget.disclaimerSize,
                           height: 1.5,
+                          decoration: TextDecoration.none,
                         ),
                       ),
 

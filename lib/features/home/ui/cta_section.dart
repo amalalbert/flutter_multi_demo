@@ -72,6 +72,7 @@ class CTASection extends RearchConsumer {
                           fontSize: mainTextFontSize,
                           height: mainTextLineHeight,
                           fontWeight: FontWeight.w500,
+                          decoration: TextDecoration.none,
                         ),
                       ),
 
@@ -97,6 +98,7 @@ class CTASection extends RearchConsumer {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: buttonFontSize,
+                            decoration: TextDecoration.none,
                           ),
                         ),
                       ),
@@ -109,6 +111,7 @@ class CTASection extends RearchConsumer {
                         style: TextStyle(
                           color: Colors.white70,
                           fontSize: subtextFontSize,
+                          decoration: TextDecoration.none,
                         ),
                       ),
                     ],
